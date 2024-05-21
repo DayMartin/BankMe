@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Cedente {
+  id String @id @default(uuid())
+  document String
+  email String
+  phone String
+  name String
+  recebiveis Recebivel[]
+}
+
+model Recebivel {
+  id String @id @default(uuid())
+  value Float
+  emissionDate DateTime
+  assignor Cedente @relation(fields: [assignorID], references: [id])
+  assignorID  String
+}
